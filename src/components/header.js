@@ -6,7 +6,7 @@ const Header = (backBtn) => {
   return (
     <>
       <h1>Countries APP</h1>
-      { checkBtn && <><Link to="/">Back</Link><br /></>}
+      { checkBtn && <><Link to="/" className="back-button">&lt;&nbsp;BACK</Link><br /></>}
     </>
   );
 }

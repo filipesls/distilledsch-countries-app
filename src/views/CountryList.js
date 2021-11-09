@@ -4,7 +4,7 @@ import Header from '../components/header';
 import Card from '../components/card';
 import { getCountryList } from '../api/api';
 
-import '../card.style.scss';
+import '../style/card.style.scss';
 
 const CountryList = () => {
   const [ countries, setCountries ] = useState([]);

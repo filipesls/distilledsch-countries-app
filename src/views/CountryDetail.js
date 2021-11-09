@@ -6,6 +6,8 @@ import { getCountryByName } from '../api/api';
 import Header from '../components/header';
 import CountryBorder from '../components/countryBorder';
 
+import '../style/country.detail.scss';
+
 const CountryDetail = () => {
   const params = useParams();
   const countryName = params.name;
@@ -41,16 +43,22 @@ const CountryDetail = () => {
   return (
     <div className="App">
       <Header backBtn />
-      <img className="" alt="flag" src={country?.flags.svg} />
-      <div>
-        <p>{country?.name.common}</p>
-        <p>Capital: {country?.capital}</p>
-        <p>Population: {country?.population}</p>
-        <p>Currency: {currencies}</p>
-        <p>Languages: {languages}</p>
+      <div className="country-container">
+        <img className="country-flag" alt="flag" src={country?.flags.svg} />
+        <div className="country-description">
+          <p>{country?.name.common}</p>
+          <p>Capital: {country?.capital}</p>
+          <p>Population: {country?.population}</p>
+          <p>Currency: {currencies}</p>
+          <p>Languages: {languages}</p>
+        </div>
+        {borders &&
+        <div className="country-bodering-list">
+          <h2>Bodering Countries</h2>
+          {borders}
+        </div>
+        }
       </div>
-      {borders && <h3>Bodering Countries</h3>}
-      {borders}
     </div>
   )}
 

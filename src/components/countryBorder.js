@@ -15,7 +15,7 @@ const CountryBorder = ( cca3 ) => {
 
   },[]);
 
-  console.log(countryBorder);
+  // console.log(countryBorder);
 
   return (
     <div className="">
