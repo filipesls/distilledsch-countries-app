@@ -4,7 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import CountryList from './views/CountryList';
 import CountryDetail from './views/CountryDetail.js';
 
-import './App.css';
+import './App.scss';
+import './common/reset.scss';
 
 function App() {
 

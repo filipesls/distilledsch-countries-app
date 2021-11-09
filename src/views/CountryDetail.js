@@ -1,43 +1,57 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useLocation, useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { getCountryByName } from '../api/api';
+
+import Header from '../components/header';
+import CountryBorder from '../components/countryBorder';
 
 const CountryDetail = () => {
-  const location = useLocation();
   const params = useParams();
   const countryName = params.name;
   const [ country, setCountry ] = useState();
+  let languages = null;
+  let currencies = null;
+  let borders = null;
 
   useEffect(() => {
-    !country && axios
-      .get(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
-      .then( response => {
-        // handle success
-        setCountry(response.data[0]);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
+
+    (async () => {
+      const countryData = await getCountryByName(countryName)
+      setCountry(countryData.data[0]);
+    })()
+
   },[]);
 
+  if (country) {
+    const languagesArray = Object.values(country?.languages);
+    languages = languagesArray.map((_value) => `${_value}, `);
+
+    const currenciesArray = Object.keys(country?.currencies);
+    currencies = currenciesArray.map((_key) => `${_key}, `);
+
+    const bordersArray = country?.borders;
+    if (bordersArray) {
+      borders = bordersArray.map((_border) => 
+        <CountryBorder key={_border} cca3={_border} />
+      );
+    }
+  }
+
   return (
-    <>
     <div className="App">
-      <h1>Countries APP</h1>
-      <Link to="/">Back</Link>
-      <hr />
+      <Header backBtn />
       <img className="" alt="flag" src={country?.flags.svg} />
-      <p>{country?.name.common}</p>
-      <p>Capital: </p>
-      <p>Population: </p>
-      <p>Currency: </p>
-      <p>Languages: </p>
-      <h3>Bodering Countries</h3>
-      {/* <img className="card-flag" alt="flag" src={`https://flagcdn.com/${country?.borders[0]}.svg`} /> */}
+      <div>
+        <p>{country?.name.common}</p>
+        <p>Capital: {country?.capital}</p>
+        <p>Population: {country?.population}</p>
+        <p>Currency: {currencies}</p>
+        <p>Languages: {languages}</p>
+      </div>
+      {borders && <h3>Bodering Countries</h3>}
+      {borders}
     </div>
-    </>
   )}
 
 export default CountryDetail;

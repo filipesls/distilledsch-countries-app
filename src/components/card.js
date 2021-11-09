@@ -5,18 +5,15 @@ const Card = ( country ) => {
   const countryData = country.country;
 
   return (
-    <>
     <Link to={`/${countryData.name.common}`} className="link" params={country} state={country}>
-      <div className="card-container">
+      <fieldset className="card-container">
+        <legend>Country</legend>
         <img className="card-flag" alt="flag" src={countryData.flags.png} />
-        <div className="card-description">
-          <h3 className="card-title">{countryData.name.common}</h3>
-          <p>{countryData.capital}</p>
-          <p>{countryData.population}</p>
-        </div>
-      </div>
+        <h3 className="card-title">{countryData.name.common}</h3>
+        <span>Capital: {countryData.capital}</span>
+        <p>Population: {countryData.population}</p>
+      </fieldset>
     </Link>
-    </>
   );
 };
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import Header from '../components/header';
 import Card from '../components/card';
+import { getCountryList } from '../api/api';
 
 import '../card.style.scss';
 
@@ -9,16 +10,12 @@ const CountryList = () => {
   const [ countries, setCountries ] = useState([]);
 
   useEffect(() => {
-    axios
-      .get('https://restcountries.com/v3.1/all')
-      .then( response => {
-        // handle success
-        setCountries(response.data)
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
+
+    (async () => {
+      const countrriesData = await getCountryList()
+      setCountries(countrriesData.data)
+    })()
+
   },[]);
 
   const countriesList = countries.map((country) =>
@@ -27,8 +24,10 @@ const CountryList = () => {
 
   return (
     <div className="App">
-      <h1>Countries APP</h1>
-      {countriesList}
+      <Header />
+      <div className="card-list-container">
+        {countriesList}
+      </div>
     </div>
   );
 }
